@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Snax - File Tools</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Animated Background Elements -->
+    <div class="bg-elements">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="tech-grid"></div>
+        <div class="particles"></div>
+    </div>
+    
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <img src="logo.svg" alt="All Snax" class="sidebar-logo">
+                <span class="sidebar-title">All Snax</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarClose">✕</button>
+        </div>
+        
+        <div class="sidebar-content">
+            <div class="sidebar-section">
+                <h4>Navigation</h4>
+                <ul class="sidebar-menu">
+                    <li><a href="#home" class="sidebar-link">🏠 Home</a></li>
+                    <li><a href="#tools" class="sidebar-link">🛠️ Tools</a></li>
+                    <li><a href="#about" class="sidebar-link">👤 About</a></li>
+                    <li><a href="#contact" class="sidebar-link">📧 Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <h4>Quick Tools</h4>
+                <ul class="sidebar-menu">
+                    <li><a href="#" class="sidebar-link" data-tool="pdf-to-word">📄 PDF to Word</a></li>
+                    <li><a href="#" class="sidebar-link" data-tool="pdf-merge">🔗 Merge PDF</a></li>
+                    <li><a href="#" class="sidebar-link" data-tool="pdf-compress">🗜️ Compress PDF</a></li>
+                    <li><a href="#" class="sidebar-link" data-tool="image-resize">🖼️ Resize Image</a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <h4>Recent Activity</h4>
+                <div class="activity-list" id="recentActivity">
+                    <div class="activity-item">
+                        <span class="activity-icon">📄</span>
+                        <span class="activity-text">PDF converted</span>
+                        <span class="activity-time">2m ago</span>
+                    </div>
+                    <div class="activity-item">
+                        <span class="activity-icon">🖼️</span>
+                        <span class="activity-text">Image resized</span>
+                        <span class="activity-time">5m ago</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h4>Quick Stats</h4>
+                <div class="stats-mini">
+                    <div class="stat-mini">
+                        <span class="stat-mini-number" id="filesProcessed">0</span>
+                        <span class="stat-mini-label">Files Processed</span>
+                    </div>
+                    <div class="stat-mini">
+                        <span class="stat-mini-number">25+</span>
+                        <span class="stat-mini-label">Tools Available</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar-footer">
+            <a href="/admin" class="admin-link">⚙️ Admin Dashboard</a>
+        </div>
+    </div>
+    
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-brand">
+                <img src="logo.svg" alt="All Snax" class="nav-logo">
+                <span class="nav-title">All Snax</span>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="dropdown left-dropdown">
+                <a href="#tools" class="nav-link dropdown-toggle">All Tools <span class="arrow">▼</span></a>
+                <div class="dropdown-menu">
+                    <div class="tools-categories">
+                        <div class="tool-category">
+                            <h4>MERGE</h4>
+                            <a href="#" data-tool="pdf-merge">📄 Merge PDF</a>
+                            <a href="#" data-tool="organize">📋 Organize</a>
+                        </div>
+                        
+                        <div class="tool-category">
+                            <h4>EDIT & SIGN</h4>
+                            <a href="#" data-tool="pdf-sign">✍️ Fill & Sign</a>
+                            <a href="#" data-tool="delete-pages">🗑️ Delete Pages</a>
+                        </div>
+                        
+                        <div class="tool-category">
+                            <h4>CONVERT FROM PDF</h4>
+                            <a href="#" data-tool="pdf-to-word">📄 PDF to Word</a>
+                            <a href="#" data-tool="pdf-to-jpg">🖼️ PDF to JPG</a>
+                            <a href="#" data-tool="pdf-to-text">📝 PDF to Text</a>
+                        </div>
+                        
+                        <div class="tool-category">
+                            <h4>CONVERT TO PDF</h4>
+                            <a href="#" data-tool="word-to-pdf">📄 Word to PDF</a>
+                            <a href="#" data-tool="image-to-pdf">🖼️ JPG to PDF</a>
+                        </div>
+                        
+                        <div class="tool-category">
+                            <h4>SPLIT</h4>
+                            <a href="#" data-tool="pdf-split">📄 Extract Pages</a>
+                            <a href="#" data-tool="split-by-pages">📑 Split by Pages</a>
+                            <a href="#" data-tool="split-in-half">✂️ Split in Half</a>
+                        </div>
+                        
+                        <div class="tool-category">
+                            <h4>COMPRESS</h4>
+                            <a href="#" data-tool="pdf-compress">🗜️ Compress PDF</a>
+                            <a href="#" data-tool="image-resize">🖼️ Resize Image</a>
+                        </div>
+                        
+                        <div class="tool-category">
+                            <h4>SECURITY</h4>
+                            <a href="#" data-tool="protect">🔒 Protect PDF</a>
+                            <a href="#" data-tool="watermark">💧 Watermark</a>
+                        </div>
+                        
+                        <div class="tool-category">
+                            <h4>OTHER</h4>
+                            <a href="#" data-tool="pdf-resize">📏 Resize PDF</a>
+                            <a href="#" data-tool="rotate">🔄 Rotate</a>
+                            <a href="#" data-tool="page-numbers">🔢 Page Numbers</a>
+                        </div>
+                        
+                        <div class="tool-category coming-soon-category">
+                            <h4>COMING SOON FEATURES</h4>
+                            <span class="coming-soon-item">📝 Edit PDF</span>
+                            <span class="coming-soon-item">📚 Word Merge</span>
+                            <span class="coming-soon-item">📝 Create Forms</span>
+                            <span class="coming-soon-item">📊 PDF to Excel</span>
+                            <span class="coming-soon-item">🌐 HTML to PDF</span>
+                            <span class="coming-soon-item">🔓 Unlock PDF</span>
+                            <span class="coming-soon-item">✂️ Crop PDF</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <section id="home">
+            <div class="hero-bg">
+                <div class="tech-illustration">
+                    <svg viewBox="0 0 400 300" class="tech-svg">
+                        <defs>
+                            <linearGradient id="techGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#667eea;stop-opacity:0.8" />
+                                <stop offset="100%" style="stop-color:#764ba2;stop-opacity:0.8" />
+                            </linearGradient>
+                        </defs>
+                        <rect x="50" y="50" width="80" height="60" fill="url(#techGrad)" rx="8" class="tech-rect"/>
+                        <rect x="150" y="80" width="60" height="40" fill="url(#techGrad)" rx="6" class="tech-rect"/>
+                        <rect x="250" y="60" width="70" height="50" fill="url(#techGrad)" rx="7" class="tech-rect"/>
+                        <circle cx="100" cy="200" r="25" fill="url(#techGrad)" class="tech-circle"/>
+                        <circle cx="200" cy="180" r="20" fill="url(#techGrad)" class="tech-circle"/>
+                        <circle cx="300" cy="220" r="30" fill="url(#techGrad)" class="tech-circle"/>
+                        <path d="M50 150 Q200 100 350 150" stroke="url(#techGrad)" stroke-width="3" fill="none" class="tech-path"/>
+                        <path d="M80 250 Q200 200 320 250" stroke="url(#techGrad)" stroke-width="2" fill="none" class="tech-path"/>
+                    </svg>
+                </div>
+            </div>
+            <header>
+                <h1><img src="logo.svg" alt="All Snax" class="header-logo"> All Snax</h1>
+                <p class="hero-tagline">Transform, Convert & Optimize Files with <span class="highlight">Lightning Speed</span></p>
+                <div class="hero-cta">
+                    <button class="cta-primary" onclick="document.getElementById('tools').scrollIntoView({behavior: 'smooth'})">
+                        <span>Start Processing Files</span>
+                        <div class="cta-arrow">→</div>
+                    </button>
+                    <button class="cta-secondary" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">
+                        <span>Learn More</span>
+                    </button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item roll-in">
+                        <span class="stat-number">25+</span>
+                        <span class="stat-label">Tools Available</span>
+                    </div>
+                    <div class="stat-item roll-in">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Secure Processing</span>
+                    </div>
+                    <div class="stat-item roll-in">
+                        <span class="stat-number">∞</span>
+                        <span class="stat-label">File Size Support</span>
+                    </div>
+                </div>
+            </header>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features-section">
+            <div class="feature-showcase">
+                <div class="feature-item slide-in-left">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Lightning Fast</h3>
+                    <p>Process files in seconds with our optimized algorithms</p>
+                </div>
+                <div class="feature-item slide-in-up">
+                    <div class="feature-icon">🔒</div>
+                    <h3>100% Secure</h3>
+                    <p>Your files are processed locally and never stored on our servers</p>
+                </div>
+                <div class="feature-item slide-in-right">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Precision Tools</h3>
+                    <p>Professional-grade tools for all your document needs</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="tools">
+            <div class="tools-section">
+                <h2 class="section-title">PDF Tools</h2>
+                <div class="tools-grid pdf-tools">
+
+
+                    <div class="tool-card" data-tool="pdf-to-word">
+                        <div class="tool-icon">📄</div>
+                        <h3>PDF to Word</h3>
+                        <p>Convert PDF to DOCX</p>
+                    </div>
+
+                    <div class="tool-card" data-tool="pdf-merge">
+                        <div class="tool-icon">🔗</div>
+                        <h3>PDF Merge</h3>
+                        <p>Combine multiple PDFs</p>
+                    </div>
+
+                    <div class="tool-card" data-tool="pdf-sign">
+                        <div class="tool-icon">✍️</div>
+                        <h3>PDF Sign</h3>
+                        <p>Add digital signatures</p>
+                    </div>
+
+                    <div class="tool-card" data-tool="pdf-resize">
+                        <div class="tool-icon">📏</div>
+                        <h3>PDF Resizer</h3>
+                        <p>Resize PDF pages</p>
+                    </div>
+
+                    <div class="tool-card" data-tool="pdf-split">
+                        <div class="tool-icon">✂️</div>
+                        <h3>PDF Split</h3>
+                        <p>Split PDF into pages</p>
+                    </div>
+
+                    <div class="tool-card" data-tool="pdf-compress">
+                        <div class="tool-icon">🗜️</div>
+                        <h3>PDF Compress</h3>
+                        <p>Reduce PDF file size</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tools-section">
+                <h2 class="section-title">Image Tools</h2>
+                <div class="tools-grid image-tools">
+                    <div class="tool-card" data-tool="image-resize">
+                        <div class="tool-icon">🖼️</div>
+                        <h3>Image Resizer</h3>
+                        <p>Resize images easily</p>
+                    </div>
+
+                    <div class="tool-card" data-tool="image-to-pdf">
+                        <div class="tool-icon">🖼️➡️📄</div>
+                        <h3>Image to PDF</h3>
+                        <p>Convert images to PDF</p>
+                    </div>
+
+                    <div class="tool-card" data-tool="watermark">
+                        <div class="tool-icon">💧</div>
+                        <h3>Add Watermark</h3>
+                        <p>Add watermarks to files</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tools-section">
+                <h2 class="section-title">Word Tools</h2>
+                <div class="tools-grid word-tools">
+                    <div class="tool-card" data-tool="word-to-pdf">
+                        <div class="tool-icon">📋</div>
+                        <h3>Word to PDF</h3>
+                        <p>Convert DOCX to PDF</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tools-section">
+                <h2 class="section-title">Coming Soon Features</h2>
+                <div class="tools-grid coming-soon-tools">
+                    <div class="tool-card coming-soon" data-disabled="true">
+                        <div class="tool-icon">📝</div>
+                        <h3>PDF Editor</h3>
+                        <p>Coming Soon!</p>
+                    </div>
+
+                    <div class="tool-card coming-soon" data-disabled="true">
+                        <div class="tool-icon">📚</div>
+                        <h3>Word Merge</h3>
+                        <p>Coming Soon!</p>
+                    </div>
+
+                    <div class="tool-card coming-soon" data-disabled="true">
+                        <div class="tool-icon">📝</div>
+                        <h3>Create Forms</h3>
+                        <p>Coming Soon!</p>
+                    </div>
+
+                    <div class="tool-card coming-soon" data-disabled="true">
+                        <div class="tool-icon">📊</div>
+                        <h3>PDF to Excel</h3>
+                        <p>Coming Soon!</p>
+                    </div>
+
+                    <div class="tool-card coming-soon" data-disabled="true">
+                        <div class="tool-icon">🌐</div>
+                        <h3>HTML to PDF</h3>
+                        <p>Coming Soon!</p>
+                    </div>
+
+                    <div class="tool-card coming-soon" data-disabled="true">
+                        <div class="tool-icon">🔓</div>
+                        <h3>Unlock PDF</h3>
+                        <p>Coming Soon!</p>
+                    </div>
+
+                    <div class="tool-card coming-soon" data-disabled="true">
+                        <div class="tool-icon">✂️</div>
+                        <h3>Crop PDF</h3>
+                        <p>Coming Soon!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stats Section -->
+        <section id="tech-stats" class="tech-stats-section">
+            <div class="stats-container">
+                <div class="stat-card bounce-in">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-value" data-target="99.9">0</div>
+                    <div class="stat-unit">%</div>
+                    <div class="stat-desc">Uptime</div>
+                </div>
+                <div class="stat-card bounce-in">
+                    <div class="stat-icon">📁</div>
+                    <div class="stat-value" data-target="1000000">0</div>
+                    <div class="stat-unit">+</div>
+                    <div class="stat-desc">Files Processed</div>
+                </div>
+                <div class="stat-card bounce-in">
+                    <div class="stat-icon">🌍</div>
+                    <div class="stat-value" data-target="150">0</div>
+                    <div class="stat-unit">+</div>
+                    <div class="stat-desc">Countries</div>
+                </div>
+                <div class="stat-card bounce-in">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-value" data-target="4.9">0</div>
+                    <div class="stat-unit">/5</div>
+                    <div class="stat-desc">Rating</div>
+                </div>
+            </div>
+        </section>te Forms</h3>
+                        <p>Coming Soon!</p>
+                    </div>
+
+                    <div class="tool-card coming-soon" data-disabled="true">
+                        <div class="tool-icon">📊</div>
+                        <h3>PDF to Excel</h3>
+                        <p>Coming Soon!</p>
+                    </div>
+
+                    <div class="tool-card coming-soon" data-disabled="true">
+                        <div class="tool-icon">🌐</div>
+                        <h3>HTML to PDF</h3>
+                        <p>Coming Soon!</p>
+                    </div>
+
+                    <div class="tool-card coming-soon" data-disabled="true">
+                        <div class="tool-icon">🔓</div>
+                        <h3>Unlock PDF</h3>
+                        <p>Coming Soon!</p>
+                    </div>
+
+                    <div class="tool-card coming-soon" data-disabled="true">
+                        <div class="tool-icon">✂️</div>
+                        <h3>Crop PDF</h3>
+                        <p>Coming Soon!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us Section -->
+        <section id="why-choose" class="why-choose-section reveal-section">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose All Snax?</h2>
+                <p class="section-subtitle">Experience the future of document processing with cutting-edge technology</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>Instant Processing</h3>
+                    <p>Advanced algorithms ensure your files are processed in milliseconds, not minutes.</p>
+                    <div class="benefit-stats">
+                        <span class="stat">99.9% faster</span>
+                        <span class="stat-desc">than traditional tools</span>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🛡️</div>
+                    <h3>100% Secure</h3>
+                    <p>End-to-end encryption ensures your sensitive documents remain completely private.</p>
+                    <div class="benefit-stats">
+                        <span class="stat">256-bit encryption</span>
+                        <span class="stat-desc">bank-level security</span>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🌐</div>
+                    <h3>Universal Compatibility</h3>
+                    <p>Works seamlessly across all devices and platforms without any installations.</p>
+                    <div class="benefit-stats">
+                        <span class="stat">100% web-based</span>
+                        <span class="stat-desc">no downloads needed</span>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎨</div>
+                    <h3>Professional Quality</h3>
+                    <p>Enterprise-grade output that maintains document integrity and formatting.</p>
+                    <div class="benefit-stats">
+                        <span class="stat">Pixel-perfect</span>
+                        <span class="stat-desc">professional results</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section reveal-section">
+            <div class="about-layout">
+                <!-- Left Sidebar -->
+                <div class="profile-sidebar">
+                    <div class="profile-card">
+                        <div class="profile-avatar">
+                            <img src="img.jpg" alt="Lokesh Sharma" class="avatar-image">
+                            <div class="avatar-ring"></div>
+                        </div>
+                        <div class="profile-info">
+                            <h3>Lokesh Sharma</h3>
+                            <p class="profile-title">Full Stack Developer</p>
+                            <div class="profile-badges">
+                                <span class="badge">🏆 Tech Innovator</span>
+                                <span class="badge">💻 Full-Stack Developer</span>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-stats">
+                            <div class="stat">
+                                <span class="stat-number">5+</span>
+                                <span class="stat-label">Years Experience</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">50+</span>
+                                <span class="stat-label">Projects Completed</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">1M+</span>
+                                <span class="stat-label">Files Processed</span>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-contact">
+                            <a href="mailto:lokeshsharma353.india@gmail.com" class="contact-btn">
+                                <span>📧</span> Get in Touch
+                            </a>
+                            <a href="https://www.linkedin.com/in/lokesh-sharma-6728a828a/" target="_blank" class="contact-btn">
+                                <span>💼</span> LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Reviews -->
+                    <div class="quick-reviews">
+                        <h4>What Users Say</h4>
+                        <div class="review-item">
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <p>"Amazing tool! Saved me hours of work."</p>
+                            <span class="reviewer">- Sarah M.</span>
+                        </div>
+                        <div class="review-item">
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <p>"Fast, secure, and reliable. Highly recommended!"</p>
+                            <span class="reviewer">- James D.</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="about-main">
+                    <div class="mission-vision">
+                        <div class="mission">
+                            <h4>🎯 Our Mission</h4>
+                            <p>To democratize professional document processing tools, making them accessible to everyone, everywhere.</p>
+                        </div>
+                        <div class="vision">
+                            <h4>🔮 Our Vision</h4>
+                            <p>A world where document manipulation is instant, secure, and effortless for every user.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-stack">
+                        <h3>Built with Modern Technology</h3>
+                        <div class="tech-icons">
+                            <div class="tech-item">
+                                <div class="tech-icon">⚛️</div>
+                                <span>React</span>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-icon">🟢</div>
+                                <span>Node.js</span>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-icon">🔷</div>
+                                <span>TypeScript</span>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-icon">☁️</div>
+                                <span>Cloud Native</span>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-icon">🔒</div>
+                                <span>WebCrypto</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="testimonials-section reveal-section">
+            <div class="section-header">
+                <h2 class="section-title">What Our Users Say</h2>
+                <p class="section-subtitle">Join thousands of satisfied users worldwide</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                        <p>"All Snax has revolutionized my workflow. What used to take hours now takes minutes!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SM</div>
+                        <div class="author-info">
+                            <h4>Sarah Mitchell</h4>
+                            <span>Marketing Director</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                        <p>"The security and speed are unmatched. Perfect for handling sensitive documents."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JD</div>
+                        <div class="author-info">
+                            <h4>James Davis</h4>
+                            <span>Legal Consultant</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                        <p>"Finally, a tool that just works! No complicated setups, just pure efficiency."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AR</div>
+                        <div class="author-info">
+                            <h4>Alex Rodriguez</h4>
+                            <span>Freelance Designer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section reveal-section">
+            <div class="contact-hero">
+                <div class="contact-header">
+                    <h2>Let's Connect & Collaborate</h2>
+                    <p class="contact-subtitle">Ready to transform your document workflow? Let's talk!</p>
+                </div>
+                
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="contact-icon-wrapper">
+                            <div class="contact-icon">💬</div>
+                        </div>
+                        <h3>General Inquiries</h3>
+                        <p>Questions about features, pricing, or partnerships?</p>
+                        <a href="mailto:lokeshsharma353.india@gmail.com" class="contact-link">
+                            <span>lokeshsharma353.india@gmail.com</span>
+                            <div class="link-arrow">→</div>
+                        </a>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon-wrapper">
+                            <div class="contact-icon">🤝</div>
+                        </div>
+                        <h3>Partnership & Collaboration</h3>
+                        <p>Interested in enterprise solutions or collaborations?</p>
+                        <a href="https://www.linkedin.com/in/lokesh-sharma-6728a828a/" target="_blank" class="contact-link">
+                            <span>Connect on LinkedIn</span>
+                            <div class="link-arrow">→</div>
+                        </a>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon-wrapper">
+                            <div class="contact-icon">🛠️</div>
+                        </div>
+                        <h3>Technical Support</h3>
+                        <p>Need help with a specific tool or feature?</p>
+                        <a href="mailto:support@allsnax.com" class="contact-link">
+                            <span>Get Technical Help</span>
+                            <div class="link-arrow">→</div>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="response-promise">
+                    <div class="promise-icon">⚡</div>
+                    <div class="promise-text">
+                        <h4>Quick Response Guarantee</h4>
+                        <p>I personally respond to all inquiries within 24 hours</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section id="newsletter" class="newsletter-section reveal-section">
+            <div class="newsletter-content">
+                <div class="newsletter-header">
+                    <h2>Stay Updated</h2>
+                    <p>Get notified about new features, updates, and exclusive tips</p>
+                </div>
+                <div class="newsletter-form">
+                    <div class="form-group">
+                        <input type="email" placeholder="Enter your email address" class="email-input" id="newsletterEmail">
+                        <button class="subscribe-btn" id="subscribeBtn">
+                            <span id="btnText">Subscribe</span>
+                            <div class="btn-shine"></div>
+                        </button>
+                    </div>
+                    <p class="privacy-note">🔒 Your privacy is protected. Unsubscribe anytime.</p>
+                    <div id="subscribeMessage" class="subscribe-message hidden">✅ Successfully subscribed! Thank you for joining us.</div>
+                </div>
+            </div>
+        </section>
+
+        <div id="tool-workspace" class="workspace hidden">
+            <div class="workspace-header">
+                <h2 id="workspace-title">Tool</h2>
+                <button id="close-workspace">✕</button>
+            </div>
+            <div class="workspace-content">
+                <div class="file-drop-zone" id="dropZone">
+                    <div class="drop-content">
+                        <div class="upload-icon">📁</div>
+                        <p>Drag & drop files here or <span class="browse-link">browse</span></p>
+                        <input type="file" id="fileInput" multiple accept="*/*">
+                    </div>
+                </div>
+                <div class="tool-options" id="toolOptions"></div>
+                <div class="file-list" id="fileList"></div>
+                <div class="action-buttons">
+                    <button id="processBtn" class="btn-primary" disabled>Process Files</button>
+                    <button id="downloadBtn" class="btn-secondary hidden">Download Result</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Processing your files...</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
