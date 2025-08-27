@@ -294,8 +294,32 @@ app.get('/admin', (req, res) => {
 
 // Start server (no database initialization needed)
 const PORT = process.env.PORT || 3000;
+
+// Get local IP address
+function getLocalIP() {
+    const { networkInterfaces } = require('os');
+    const nets = networkInterfaces();
+    
+    for (const name of Object.keys(nets)) {
+        for (const net of nets[name]) {
+            if (net.family === 'IPv4' && !net.internal) {
+                return net.address;
+            }
+        }
+    }
+    return 'localhost';
+}
+
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`All Snax server running on port ${PORT}`);
-    console.log(`Access from other devices: http://YOUR_IP_ADDRESS:${PORT}`);
-    console.log('No authentication required - all features available');
+    const localIP = getLocalIP();
+    console.log('\n🚀 All Snax Server Started!');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log(`📍 Local Access:     http://localhost:${PORT}`);
+    console.log(`🌐 Network Access:   http://${localIP}:${PORT}`);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('📱 Access from other devices:');
+    console.log(`   Open browser and go to: http://${localIP}:${PORT}`);
+    console.log('   (Make sure devices are on same WiFi network)');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('✅ No authentication required - all features available\n');
 });
