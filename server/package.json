@@ -17,7 +17,8 @@
     "mammoth": "^1.6.0",
     "pdf2pic": "^3.0.4",
     "officegen": "^0.6.5",
-    "pdf-parse": "^1.1.1"
+    "pdf-parse": "^1.1.1",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

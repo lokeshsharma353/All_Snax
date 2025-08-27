@@ -302,11 +302,7 @@
                         <p>Coming Soon!</p>
                     </div>
 
-                    <div class="tool-card coming-soon" data-disabled="true">
-                        <div class="tool-icon">📝</div>
-                        <h3>Create Forms</h3>
-                        <p>Coming Soon!</p>
-                    </div>
+
 
                     <div class="tool-card coming-soon" data-disabled="true">
                         <div class="tool-icon">📊</div>
@@ -346,22 +342,11 @@
                 </div>
                 <div class="stat-card bounce-in">
                     <div class="stat-icon">📁</div>
-                    <div class="stat-value" data-target="1000000">0</div>
+                    <div class="stat-value" data-target="100">0</div>
                     <div class="stat-unit">+</div>
                     <div class="stat-desc">Files Processed</div>
                 </div>
-                <div class="stat-card bounce-in">
-                    <div class="stat-icon">⭐</div>
-                    <div class="stat-value" data-target="4.8">0</div>
-                    <div class="stat-unit">/5</div>
-                    <div class="stat-desc">User Rating</div>
-                </div>
-                <div class="stat-card bounce-in">
-                    <div class="stat-icon">⭐</div>
-                    <div class="stat-value" data-target="4.9">0</div>
-                    <div class="stat-unit">/5</div>
-                    <div class="stat-desc">Rating</div>
-                </div>
+
             </div>
         </section>te Forms</h3>
                         <p>Coming Soon!</p>
@@ -538,6 +523,40 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Write Review Section -->
+        <section id="write-review" class="write-review-section reveal-section">
+            <div class="section-header">
+                <h2 class="section-title">Share Your Experience</h2>
+                <p class="section-subtitle">Help others by writing a review</p>
+            </div>
+            <div class="review-form-container">
+                <form class="review-form" id="reviewForm">
+                    <div class="form-group">
+                        <label for="reviewerName">Your Name</label>
+                        <input type="text" id="reviewerName" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewRating">Rating</label>
+                        <div class="star-rating" id="starRating">
+                            <span class="star" data-rating="1">★</span>
+                            <span class="star" data-rating="2">★</span>
+                            <span class="star" data-rating="3">★</span>
+                            <span class="star" data-rating="4">★</span>
+                            <span class="star" data-rating="5">★</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewText">Your Review</label>
+                        <textarea id="reviewText" placeholder="Share your experience with All Snax..." rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-review-btn">
+                        <span>Submit Review</span>
+                        <div class="btn-arrow">→</div>
+                    </button>
+                </form>
             </div>
         </section>
 

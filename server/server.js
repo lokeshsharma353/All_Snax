@@ -6,9 +6,11 @@ const fs = require('fs').promises;
 require('dotenv').config();
 
 const FileProcessor = require('./fileProcessor');
+const Database = require('./database');
 
 const app = express();
 const fileProcessor = new FileProcessor();
+const db = new Database();
 
 // Middleware
 app.use(cors());
@@ -56,6 +58,10 @@ app.post('/api/process/pdf-to-word', upload.single('file'), async (req, res) => 
         if (!req.file) {
             return res.status(400).json({ success: false, message: 'No file uploaded' });
         }
+        
+        // Log operation to database
+        await db.logFileOperation('pdf-to-word', req.file.originalname, req.file.size, req.ip);
+        
         const result = await fileProcessor.pdfToWord(req.file.path, 'guest', req.file.originalname);
         res.json(result);
     } catch (error) {
@@ -221,33 +227,59 @@ app.get('/api/download/:filename', async (req, res) => {
     }
 });
 
-// Simple stats endpoint (no database required)
+// Reviews endpoints
+app.post('/api/reviews', async (req, res) => {
+    try {
+        const { name, rating, reviewText } = req.body;
+        
+        if (!name || !rating || !reviewText) {
+            return res.status(400).json({ success: false, message: 'All fields are required' });
+        }
+        
+        const result = await db.addReview(name, parseInt(rating), reviewText);
+        res.json({ success: true, reviewId: result.id });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Failed to save review' });
+    }
+});
+
+app.get('/api/reviews', async (req, res) => {
+    try {
+        const reviews = await db.getReviews(20);
+        res.json({ success: true, reviews });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Failed to fetch reviews' });
+    }
+});
+
+// Subscription endpoint
+app.post('/api/subscribe', async (req, res) => {
+    try {
+        const { email } = req.body;
+        
+        if (!email) {
+            return res.status(400).json({ success: false, message: 'Email is required' });
+        }
+        
+        const result = await db.addSubscription(email);
+        if (result.changes > 0) {
+            res.json({ success: true, message: 'Successfully subscribed!' });
+        } else {
+            res.json({ success: true, message: 'Already subscribed!' });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Failed to subscribe' });
+    }
+});
+
+// Stats endpoint with database
 app.get('/api/stats', async (req, res) => {
     try {
-        // Simple file-based stats
-        const outputDir = path.join(__dirname, 'output');
-        const uploadsDir = path.join(__dirname, 'uploads');
-        
-        let processedFiles = 0;
-        let uploadedFiles = 0;
-        
-        try {
-            const outputFiles = await fs.readdir(outputDir);
-            processedFiles = outputFiles.length;
-        } catch (error) {
-            // Directory doesn't exist yet
-        }
-        
-        try {
-            const uploadFiles = await fs.readdir(uploadsDir);
-            uploadedFiles = uploadFiles.length;
-        } catch (error) {
-            // Directory doesn't exist yet
-        }
-        
+        const stats = await db.getStats();
         res.json({
-            totalProcessedFiles: processedFiles,
-            totalUploadedFiles: uploadedFiles,
+            totalProcessedFiles: stats.total_operations,
+            totalSubscriptions: stats.total_subscriptions,
+            totalReviews: stats.total_reviews,
             serverStatus: 'Running'
         });
     } catch (error) {

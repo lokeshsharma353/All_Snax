@@ -12,6 +12,7 @@ class AllSnax {
         this.setupSidebar();
         this.showWelcomeMessage();
         this.setupAnimations();
+        this.loadExistingReviews();
     }
 
     showWelcomeMessage() {
@@ -1117,6 +1118,9 @@ class AllSnax {
 
         // Newsletter subscription functionality
         this.setupNewsletterSubscription();
+        
+        // Review form functionality
+        this.setupReviewForm();
 
         // Add parallax effect to floating shapes
         window.addEventListener('scroll', () => {
@@ -1174,15 +1178,28 @@ class AllSnax {
                 btnText.textContent = 'Subscribing...';
 
                 try {
-                    // Send email to your address
-                    await this.sendSubscriptionEmail(email);
+                    // Submit subscription to database
+                    const response = await fetch('/api/subscribe', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email: email })
+                    });
                     
-                    // Show success state
-                    btnText.textContent = 'Subscribed!';
-                    subscribeBtn.classList.add('subscribed');
-                    subscribeMessage.classList.remove('hidden');
-                    subscribeMessage.classList.add('show');
-                    emailInput.value = '';
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Show success state
+                        btnText.textContent = 'Subscribed!';
+                        subscribeBtn.classList.add('subscribed');
+                        subscribeMessage.classList.remove('hidden');
+                        subscribeMessage.classList.add('show');
+                        subscribeMessage.textContent = result.message;
+                        emailInput.value = '';
+                    } else {
+                        throw new Error(result.message);
+                    }
                     
                     // Keep success state
                     setTimeout(() => {
@@ -1229,6 +1246,185 @@ class AllSnax {
         return new Promise((resolve) => {
             setTimeout(resolve, 1000);
         });
+    }
+    
+    setupReviewForm() {
+        const reviewForm = document.getElementById('reviewForm');
+        const starRating = document.getElementById('starRating');
+        const stars = starRating?.querySelectorAll('.star');
+        let selectedRating = 0;
+        
+        // Star rating functionality
+        if (stars) {
+            stars.forEach((star, index) => {
+                star.addEventListener('click', () => {
+                    selectedRating = index + 1;
+                    this.updateStarRating(stars, selectedRating);
+                });
+                
+                star.addEventListener('mouseover', () => {
+                    this.updateStarRating(stars, index + 1);
+                });
+            });
+            
+            starRating.addEventListener('mouseleave', () => {
+                this.updateStarRating(stars, selectedRating);
+            });
+        }
+        
+        // Form submission
+        if (reviewForm) {
+            reviewForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('reviewerName').value;
+                const reviewText = document.getElementById('reviewText').value;
+                
+                if (selectedRating === 0) {
+                    this.showMessage('Please select a rating');
+                    return;
+                }
+                
+                // Simulate review submission
+                const submitBtn = reviewForm.querySelector('.submit-review-btn');
+                const originalText = submitBtn.querySelector('span').textContent;
+                
+                submitBtn.disabled = true;
+                submitBtn.querySelector('span').textContent = 'Submitting...';
+                
+                try {
+                    // Submit review to database
+                    const response = await fetch('/api/reviews', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: name,
+                            rating: selectedRating,
+                            reviewText: reviewText
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Add review to testimonials section
+                        this.addReviewToTestimonials(name, reviewText, selectedRating);
+                        
+                        this.showMessage('Thank you for your review! Your review has been added.');
+                        reviewForm.reset();
+                        selectedRating = 0;
+                        this.updateStarRating(stars, 0);
+                    } else {
+                        throw new Error(result.message);
+                    }
+                    
+                } catch (error) {
+                    this.showMessage('Failed to submit review. Please try again.');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.querySelector('span').textContent = originalText;
+                }
+            });
+        }
+    }
+    
+    updateStarRating(stars, rating) {
+        stars.forEach((star, index) => {
+            if (index < rating) {
+                star.classList.add('active');
+            } else {
+                star.classList.remove('active');
+            }
+        });
+    }
+    
+    addReviewToTestimonials(name, reviewText, rating) {
+        const testimonialsGrid = document.querySelector('.testimonials-grid');
+        if (!testimonialsGrid) return;
+        
+        // Create star display
+        const starsDisplay = '⭐'.repeat(rating);
+        
+        // Get initials for avatar
+        const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        
+        // Create new testimonial card
+        const testimonialCard = document.createElement('div');
+        testimonialCard.className = 'testimonial-card';
+        testimonialCard.innerHTML = `
+            <div class="testimonial-content">
+                <div class="stars">${starsDisplay}</div>
+                <p>"${reviewText}"</p>
+            </div>
+            <div class="testimonial-author">
+                <div class="author-avatar">${initials}</div>
+                <div class="author-info">
+                    <h4>${name}</h4>
+                    <span>Verified User</span>
+                </div>
+            </div>
+        `;
+        
+        // Add animation class
+        testimonialCard.style.opacity = '0';
+        testimonialCard.style.transform = 'translateY(20px)';
+        
+        // Insert at the beginning of testimonials
+        testimonialsGrid.insertBefore(testimonialCard, testimonialsGrid.firstChild);
+        
+        // Animate in
+        setTimeout(() => {
+            testimonialCard.style.transition = 'all 0.5s ease';
+            testimonialCard.style.opacity = '1';
+            testimonialCard.style.transform = 'translateY(0)';
+        }, 100);
+        
+        // Scroll to testimonials section
+        setTimeout(() => {
+            document.getElementById('testimonials').scrollIntoView({ behavior: 'smooth' });
+        }, 1000);
+    }
+    
+    async loadExistingReviews() {
+        try {
+            const response = await fetch('/api/reviews');
+            const result = await response.json();
+            
+            if (result.success && result.reviews.length > 0) {
+                const testimonialsGrid = document.querySelector('.testimonials-grid');
+                if (!testimonialsGrid) return;
+                
+                // Clear existing testimonials (keep the default ones or replace)
+                // testimonialsGrid.innerHTML = '';
+                
+                result.reviews.forEach(review => {
+                    const starsDisplay = '⭐'.repeat(review.rating);
+                    const initials = review.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+                    
+                    const testimonialCard = document.createElement('div');
+                    testimonialCard.className = 'testimonial-card';
+                    testimonialCard.innerHTML = `
+                        <div class="testimonial-content">
+                            <div class="stars">${starsDisplay}</div>
+                            <p>"${review.review_text}"</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">${initials}</div>
+                            <div class="author-info">
+                                <h4>${review.name}</h4>
+                                <span>Verified User</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    testimonialsGrid.appendChild(testimonialCard);
+                });
+            }
+        } catch (error) {
+            console.log('Could not load existing reviews:', error);
+        }
     }
 }
 
