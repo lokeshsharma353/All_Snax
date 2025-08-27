@@ -16,165 +16,120 @@
         <div class="particles"></div>
     </div>
     
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-brand">
-                <img src="logo.svg" alt="All Snax" class="sidebar-logo">
-                <span class="sidebar-title">All Snax</span>
-            </div>
-            <button class="sidebar-toggle" id="sidebarClose">✕</button>
-        </div>
-        
-        <div class="sidebar-content">
-            <div class="sidebar-section">
-                <h4>Navigation</h4>
-                <ul class="sidebar-menu">
-                    <li><a href="#home" class="sidebar-link">🏠 Home</a></li>
-                    <li><a href="#tools" class="sidebar-link">🛠️ Tools</a></li>
-                    <li><a href="#about" class="sidebar-link">👤 About</a></li>
-                    <li><a href="#contact" class="sidebar-link">📧 Contact</a></li>
-                </ul>
-            </div>
-            
-            <div class="sidebar-section">
-                <h4>Quick Tools</h4>
-                <ul class="sidebar-menu">
-                    <li><a href="#" class="sidebar-link" data-tool="pdf-to-word">📄 PDF to Word</a></li>
-                    <li><a href="#" class="sidebar-link" data-tool="pdf-merge">🔗 Merge PDF</a></li>
-                    <li><a href="#" class="sidebar-link" data-tool="pdf-compress">🗜️ Compress PDF</a></li>
-                    <li><a href="#" class="sidebar-link" data-tool="image-resize">🖼️ Resize Image</a></li>
-                </ul>
-            </div>
-            
-            <div class="sidebar-section">
-                <h4>Recent Activity</h4>
-                <div class="activity-list" id="recentActivity">
-                    <div class="activity-item">
-                        <span class="activity-icon">📄</span>
-                        <span class="activity-text">PDF converted</span>
-                        <span class="activity-time">2m ago</span>
-                    </div>
-                    <div class="activity-item">
-                        <span class="activity-icon">🖼️</span>
-                        <span class="activity-text">Image resized</span>
-                        <span class="activity-time">5m ago</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="sidebar-section">
-                <h4>Quick Stats</h4>
-                <div class="stats-mini">
-                    <div class="stat-mini">
-                        <span class="stat-mini-number" id="filesProcessed">0</span>
-                        <span class="stat-mini-label">Files Processed</span>
-                    </div>
-                    <div class="stat-mini">
-                        <span class="stat-mini-number">25+</span>
-                        <span class="stat-mini-label">Tools Available</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="sidebar-footer">
-            <a href="/admin" class="admin-link">⚙️ Admin Dashboard</a>
-        </div>
-    </div>
-    
-    <!-- Sidebar Overlay -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
+
+    <!-- Modern Mobile-First Navbar -->
     <nav class="navbar">
         <div class="nav-container">
-            <button class="sidebar-toggle" id="sidebarToggle">
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
+            
+            <!-- Brand Logo -->
             <div class="nav-brand">
                 <img src="logo.svg" alt="All Snax" class="nav-logo">
                 <span class="nav-title">All Snax</span>
             </div>
-            <div class="nav-toggle" id="navToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <div class="dropdown left-dropdown">
-                <a href="#tools" class="nav-link dropdown-toggle">All Tools <span class="arrow">▼</span></a>
-                <div class="dropdown-menu">
-                    <div class="tools-categories">
-                        <div class="tool-category">
-                            <h4>MERGE</h4>
-                            <a href="#" data-tool="pdf-merge">📄 Merge PDF</a>
-                            <a href="#" data-tool="organize">📋 Organize</a>
-                        </div>
-                        
-                        <div class="tool-category">
-                            <h4>EDIT & SIGN</h4>
-                            <a href="#" data-tool="pdf-sign">✍️ Fill & Sign</a>
-                            <a href="#" data-tool="delete-pages">🗑️ Delete Pages</a>
-                        </div>
-                        
-                        <div class="tool-category">
-                            <h4>CONVERT FROM PDF</h4>
-                            <a href="#" data-tool="pdf-to-word">📄 PDF to Word</a>
-                            <a href="#" data-tool="pdf-to-jpg">🖼️ PDF to JPG</a>
-                            <a href="#" data-tool="pdf-to-text">📝 PDF to Text</a>
-                        </div>
-                        
-                        <div class="tool-category">
-                            <h4>CONVERT TO PDF</h4>
-                            <a href="#" data-tool="word-to-pdf">📄 Word to PDF</a>
-                            <a href="#" data-tool="image-to-pdf">🖼️ JPG to PDF</a>
-                        </div>
-                        
-                        <div class="tool-category">
-                            <h4>SPLIT</h4>
-                            <a href="#" data-tool="pdf-split">📄 Extract Pages</a>
-                            <a href="#" data-tool="split-by-pages">📑 Split by Pages</a>
-                            <a href="#" data-tool="split-in-half">✂️ Split in Half</a>
-                        </div>
-                        
-                        <div class="tool-category">
-                            <h4>COMPRESS</h4>
-                            <a href="#" data-tool="pdf-compress">🗜️ Compress PDF</a>
-                            <a href="#" data-tool="image-resize">🖼️ Resize Image</a>
-                        </div>
-                        
-                        <div class="tool-category">
-                            <h4>SECURITY</h4>
-                            <a href="#" data-tool="protect">🔒 Protect PDF</a>
-                            <a href="#" data-tool="watermark">💧 Watermark</a>
-                        </div>
-                        
-                        <div class="tool-category">
-                            <h4>OTHER</h4>
-                            <a href="#" data-tool="pdf-resize">📏 Resize PDF</a>
-                            <a href="#" data-tool="rotate">🔄 Rotate</a>
-                            <a href="#" data-tool="page-numbers">🔢 Page Numbers</a>
-                        </div>
-                        
-                        <div class="tool-category coming-soon-category">
-                            <h4>COMING SOON FEATURES</h4>
-                            <span class="coming-soon-item">📝 Edit PDF</span>
-                            <span class="coming-soon-item">📚 Word Merge</span>
-                            <span class="coming-soon-item">📝 Create Forms</span>
-                            <span class="coming-soon-item">📊 PDF to Excel</span>
-                            <span class="coming-soon-item">🌐 HTML to PDF</span>
-                            <span class="coming-soon-item">🔓 Unlock PDF</span>
-                            <span class="coming-soon-item">✂️ Crop PDF</span>
+            
+            <!-- Desktop Navigation -->
+            <div class="nav-desktop">
+                <div class="nav-tools-dropdown">
+                    <button class="tools-dropdown-btn">
+                        <span>All Tools</span>
+                        <svg class="dropdown-arrow" width="12" height="8" viewBox="0 0 12 8">
+                            <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    </button>
+                    <div class="tools-dropdown-menu">
+                        <div class="tools-grid-dropdown">
+                            <div class="tool-category">
+                                <h4>📄 PDF Tools</h4>
+                                <a href="#" data-tool="pdf-to-word">PDF to Word</a>
+                                <a href="#" data-tool="word-to-pdf">Word to PDF</a>
+                                <a href="#" data-tool="pdf-merge">PDF Merge</a>
+                                <a href="#" data-tool="pdf-split">PDF Split</a>
+                                <a href="#" data-tool="pdf-compress">PDF Compress</a>
+                                <a href="#" data-tool="protect">Protect PDF</a>
+                            </div>
+                            <div class="tool-category">
+                                <h4>🖼️ Image Tools</h4>
+                                <a href="#" data-tool="image-resize">Image Resize</a>
+                                <a href="#" data-tool="image-to-pdf">Image to PDF</a>
+                                <a href="#" data-tool="watermark">Add Watermark</a>
+                            </div>
+                            <div class="tool-category">
+                                <h4>🔄 Convert</h4>
+                                <a href="#" data-tool="pdf-to-text">PDF to Text</a>
+                                <a href="#" data-tool="pdf-to-jpg">PDF to JPG</a>
+                            </div>
                         </div>
                     </div>
                 </div>
+                
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
             </div>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
+            
+            <!-- User Status -->
+            <div class="nav-status">
+                <span class="status-text">No login required!</span>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-content">
+                <div class="mobile-nav-section">
+                    <h3>Navigation</h3>
+                    <ul class="mobile-nav-links">
+                        <li><a href="#home" class="mobile-nav-link">🏠 Home</a></li>
+                        <li><a href="#about" class="mobile-nav-link">ℹ️ About</a></li>
+                        <li><a href="#contact" class="mobile-nav-link">📞 Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="mobile-nav-section">
+                    <h3>Quick Tools</h3>
+                    <div class="mobile-tools-grid">
+                        <a href="#" class="mobile-tool-btn" data-tool="pdf-to-word">
+                            <span class="tool-icon">📄</span>
+                            <span>PDF to Word</span>
+                        </a>
+                        <a href="#" class="mobile-tool-btn" data-tool="pdf-merge">
+                            <span class="tool-icon">🔗</span>
+                            <span>PDF Merge</span>
+                        </a>
+                        <a href="#" class="mobile-tool-btn" data-tool="pdf-compress">
+                            <span class="tool-icon">🗜️</span>
+                            <span>Compress</span>
+                        </a>
+                        <a href="#" class="mobile-tool-btn" data-tool="image-resize">
+                            <span class="tool-icon">🖼️</span>
+                            <span>Resize Image</span>
+                        </a>
+                        <a href="#" class="mobile-tool-btn" data-tool="watermark">
+                            <span class="tool-icon">💧</span>
+                            <span>Watermark</span>
+                        </a>
+                        <a href="#" class="mobile-tool-btn" data-tool="pdf-split">
+                            <span class="tool-icon">✂️</span>
+                            <span>PDF Split</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="mobile-nav-section">
+                    <a href="/admin" class="mobile-admin-link">
+                        ⚙️ Admin Dashboard
+                    </a>
+                </div>
+            </div>
         </div>
     </nav>
     <div class="container">

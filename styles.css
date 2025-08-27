@@ -416,7 +416,7 @@ body {
     visibility: visible;
 }
 
-/* Navbar Styles */
+/* Modern Mobile-First Navbar */
 .navbar {
     background: rgba(15, 15, 35, 0.95);
     backdrop-filter: blur(20px);
@@ -439,17 +439,49 @@ body {
     padding: 0 20px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     height: 70px;
+    position: relative;
 }
 
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle span {
+    width: 24px;
+    height: 3px;
+    background: #fff;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Brand */
 .nav-brand {
     display: flex;
     align-items: center;
     gap: 12px;
-}
-
-.left-dropdown {
-    margin-left: 20px;
 }
 
 .nav-logo {
@@ -469,11 +501,109 @@ body {
     background-clip: text;
 }
 
-.nav-menu {
+/* Desktop Navigation */
+.nav-desktop {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+/* Tools Dropdown */
+.nav-tools-dropdown {
+    position: relative;
+}
+
+.tools-dropdown-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    color: #b3b3b3;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.tools-dropdown-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-arrow {
+    transition: transform 0.3s ease;
+}
+
+.nav-tools-dropdown:hover .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.tools-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(15, 15, 35, 0.98);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    min-width: 600px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.nav-tools-dropdown:hover .tools-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.tools-grid-dropdown {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.tool-category h4 {
+    color: #888;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tool-category a {
+    display: block;
+    color: #ccc;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.tool-category a:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(4px);
+}
+
+/* Desktop Nav Links */
+.nav-links {
     display: flex;
     list-style: none;
-    gap: 40px;
-    margin-left: auto;
+    gap: 32px;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-link {
@@ -481,8 +611,9 @@ body {
     color: #b3b3b3;
     font-weight: 500;
     font-size: 0.95rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
     position: relative;
+    padding: 8px 0;
 }
 
 .nav-link:hover {
@@ -492,12 +623,12 @@ body {
 .nav-link::after {
     content: '';
     position: absolute;
-    bottom: -5px;
+    bottom: 0;
     left: 0;
     width: 0;
     height: 2px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 0.3s ease;
     border-radius: 1px;
 }
 
@@ -508,6 +639,140 @@ body {
 
 .nav-link.active {
     color: #fff;
+}
+
+/* Status */
+.nav-status {
+    display: flex;
+    align-items: center;
+}
+
+.status-text {
+    color: #22c55e;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 6px 12px;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: 20px;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px);
+    background: rgba(15, 15, 35, 0.98);
+    backdrop-filter: blur(20px);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+.mobile-menu.active {
+    transform: translateX(0);
+}
+
+.mobile-menu-content {
+    padding: 32px 24px;
+}
+
+.mobile-nav-section {
+    margin-bottom: 40px;
+}
+
+.mobile-nav-section h3 {
+    color: #888;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mobile-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #ccc;
+    text-decoration: none;
+    padding: 16px 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-link:hover {
+    color: #fff;
+    padding-left: 8px;
+}
+
+.mobile-tools-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.mobile-tool-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #ccc;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.mobile-tool-btn:hover {
+    background: rgba(102, 126, 234, 0.1);
+    border-color: rgba(102, 126, 234, 0.3);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.mobile-tool-btn .tool-icon {
+    font-size: 1.5rem;
+}
+
+.mobile-tool-btn span:last-child {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.mobile-admin-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.mobile-admin-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
 }
 
 /* Dropdown Menu Styles */
@@ -2184,6 +2449,55 @@ header h1 {
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
+    /* Show mobile menu toggle */
+    .mobile-menu-toggle {
+        display: flex;
+    }
+    
+    /* Hide desktop navigation */
+    .nav-desktop {
+        display: none;
+    }
+    
+    /* Hide status on mobile */
+    .nav-status {
+        display: none;
+    }
+    
+    /* Adjust nav container */
+    .nav-container {
+        padding: 0 16px;
+    }
+    
+    /* Adjust brand */
+    .nav-title {
+        font-size: 1.3rem;
+    }
+    
+    .nav-logo {
+        width: 28px;
+        height: 28px;
+    }
+    
+    /* Mobile tools grid */
+    .mobile-tools-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .mobile-tool-btn {
+        padding: 16px 12px;
+    }
+    
+    .mobile-tool-btn .tool-icon {
+        font-size: 1.3rem;
+    }
+    
+    .mobile-tool-btn span:last-child {
+        font-size: 0.8rem;
+    }
+    
+    /* Other mobile styles */
     .hero-stats {
         flex-direction: column;
         gap: 30px;
@@ -2250,63 +2564,6 @@ header h1 {
     .floating-shape {
         display: none;
     }
-    .nav-menu {
-        position: fixed;
-        top: 70px;
-        left: -100%;
-        width: 100%;
-        height: calc(100vh - 70px);
-        background: rgba(0, 0, 0, 0.98);
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        padding-top: 50px;
-        transition: left 0.3s ease;
-    }
-    
-    .nav-menu.active {
-        left: 0;
-    }
-    
-    .dropdown-menu {
-        position: fixed;
-        top: 70px;
-        left: 0;
-        right: 0;
-        transform: none;
-        min-width: auto;
-        width: 100%;
-        border-radius: 0;
-        max-height: calc(100vh - 70px);
-        overflow-y: auto;
-    }
-    
-    .tools-categories {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-    
-    .dropdown:hover .dropdown-menu {
-        opacity: 0;
-        visibility: hidden;
-    }
-    
-    .dropdown.mobile-active .dropdown-menu {
-        opacity: 1;
-        visibility: visible;
-    }
-    
-    .nav-menu li {
-        margin: 20px 0;
-    }
-    
-    .nav-link {
-        font-size: 1.2rem;
-    }
-    
-    .nav-toggle {
-        display: flex;
-    }
     
     .container {
         padding: 90px 15px 20px;
@@ -2321,11 +2578,6 @@ header h1 {
     .header-logo {
         width: 50px;
         height: 50px;
-    }
-    
-    .nav-logo {
-        width: 28px;
-        height: 28px;
     }
     
     .tools-grid {
@@ -2366,6 +2618,46 @@ header h1 {
         padding: 15px;
         flex-direction: column;
         gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-container {
+        padding: 0 12px;
+    }
+    
+    .nav-title {
+        font-size: 1.2rem;
+    }
+    
+    .nav-logo {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .mobile-menu-content {
+        padding: 24px 16px;
+    }
+    
+    .mobile-nav-section {
+        margin-bottom: 32px;
+    }
+    
+    .mobile-nav-link {
+        font-size: 1rem;
+        padding: 14px 0;
+    }
+    
+    .mobile-tool-btn {
+        padding: 14px 10px;
+    }
+    
+    .mobile-tool-btn .tool-icon {
+        font-size: 1.2rem;
+    }
+    
+    .mobile-tool-btn span:last-child {
+        font-size: 0.75rem;
     }
 }
 

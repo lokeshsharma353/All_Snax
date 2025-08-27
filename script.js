@@ -15,67 +15,12 @@ class AllSnax {
     }
 
     showWelcomeMessage() {
-        // Show a simple welcome message instead of login prompt
-        const welcomeInfo = document.createElement('div');
-        welcomeInfo.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 10px; margin-left: 20px;">
-                <span style="color: #ccc; font-size: 0.9rem;">Welcome to All Snax - No login required!</span>
-            </div>
-        `;
-        document.querySelector('.nav-container').appendChild(welcomeInfo);
+        // Welcome message is now handled in the navbar status
+        console.log('All Snax initialized - No login required!');
     }
 
     setupSidebar() {
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        const sidebarClose = document.getElementById('sidebarClose');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        
-        // Open sidebar
-        sidebarToggle.addEventListener('click', () => {
-            sidebar.classList.add('open');
-            sidebarOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-        
-        // Close sidebar
-        const closeSidebar = () => {
-            sidebar.classList.remove('open');
-            sidebarOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        };
-        
-        sidebarClose.addEventListener('click', closeSidebar);
-        sidebarOverlay.addEventListener('click', closeSidebar);
-        
-        // Sidebar navigation links
-        document.querySelectorAll('.sidebar-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                const toolName = link.getAttribute('data-tool');
-                if (toolName) {
-                    e.preventDefault();
-                    this.openTool(toolName);
-                    closeSidebar();
-                } else {
-                    const href = link.getAttribute('href');
-                    if (href && href.startsWith('#')) {
-                        e.preventDefault();
-                        const targetId = href.substring(1);
-                        const targetSection = document.getElementById(targetId);
-                        if (targetSection) {
-                            const offsetTop = targetSection.offsetTop - 70;
-                            window.scrollTo({
-                                top: offsetTop,
-                                behavior: 'smooth'
-                            });
-                        }
-                        closeSidebar();
-                    }
-                }
-            });
-        });
-        
-        // Update files processed counter
+        // Sidebar functionality removed - using mobile menu instead
         this.updateFilesProcessedCounter();
     }
     
@@ -129,32 +74,83 @@ class AllSnax {
 
     setupNavbar() {
         // Mobile menu toggle
-        const navToggle = document.getElementById('navToggle');
-        const navMenu = document.getElementById('navMenu');
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
         
-        navToggle.addEventListener('click', () => {
-            navToggle.classList.toggle('active');
-            navMenu.classList.toggle('active');
+        if (mobileMenuToggle && mobileMenu) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuToggle.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+            });
+        }
+        
+        // Desktop tools dropdown
+        const toolsDropdownBtn = document.querySelector('.tools-dropdown-btn');
+        const toolsDropdownMenu = document.querySelector('.tools-dropdown-menu');
+        
+        if (toolsDropdownBtn && toolsDropdownMenu) {
+            toolsDropdownBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                toolsDropdownMenu.classList.toggle('active');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!toolsDropdownBtn.contains(e.target) && !toolsDropdownMenu.contains(e.target)) {
+                    toolsDropdownMenu.classList.remove('active');
+                }
+            });
+        }
+        
+        // Smooth scrolling for all nav links
+        document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = href.substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        const offsetTop = targetSection.offsetTop - 70;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                    
+                    // Close mobile menu
+                    if (mobileMenuToggle && mobileMenu) {
+                        mobileMenuToggle.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                }
+            });
         });
         
-        // Smooth scrolling for nav links
-        document.querySelectorAll('.nav-link').forEach(link => {
+        // Tool selection from dropdown and mobile menu
+        document.querySelectorAll('[data-tool]').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
-                const targetSection = document.getElementById(targetId);
-                
-                if (targetSection) {
-                    const offsetTop = targetSection.offsetTop - 70;
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
-                }
+                const toolName = link.getAttribute('data-tool');
+                this.openTool(toolName);
                 
                 // Close mobile menu
-                navToggle.classList.remove('active');
-                navMenu.classList.remove('active');
+                if (mobileMenuToggle && mobileMenu) {
+                    mobileMenuToggle.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+                
+                // Close desktop dropdown
+                if (toolsDropdownMenu) {
+                    toolsDropdownMenu.classList.remove('active');
+                }
+                
+                // Scroll to tools section
+                document.getElementById('tools').scrollIntoView({ behavior: 'smooth' });
             });
         });
         
@@ -173,45 +169,30 @@ class AllSnax {
             
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href').substring(1) === current) {
+                if (link.getAttribute('href') && link.getAttribute('href').substring(1) === current) {
                     link.classList.add('active');
                 }
             });
         });
         
-        // Dropdown menu functionality
-        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
-            toggle.addEventListener('click', (e) => {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    const dropdown = toggle.closest('.dropdown');
-                    dropdown.classList.toggle('mobile-active');
-                    
-                    // Close other dropdowns
-                    document.querySelectorAll('.dropdown').forEach(other => {
-                        if (other !== dropdown) {
-                            other.classList.remove('mobile-active');
-                        }
-                    });
-                }
-            });
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (mobileMenu && mobileMenu.classList.contains('active') && 
+                !mobileMenu.contains(e.target) && 
+                !mobileMenuToggle.contains(e.target)) {
+                mobileMenuToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
         
-        // Tool selection from dropdown
-        document.querySelectorAll('.dropdown-menu a[data-tool]').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const toolName = link.getAttribute('data-tool');
-                this.openTool(toolName);
-                
-                // Close dropdown
-                document.querySelectorAll('.dropdown').forEach(dropdown => {
-                    dropdown.classList.remove('mobile-active');
-                });
-                
-                // Scroll to tools section
-                document.getElementById('tools').scrollIntoView({ behavior: 'smooth' });
-            });
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && mobileMenu && mobileMenu.classList.contains('active')) {
+                mobileMenuToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
     }
 
