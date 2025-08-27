@@ -262,7 +262,8 @@ app.get('/admin', (req, res) => {
 
 // Start server (no database initialization needed)
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`All Snax server running on port ${PORT}`);
+    console.log(`Access from other devices: http://YOUR_IP_ADDRESS:${PORT}`);
     console.log('No authentication required - all features available');
 });
