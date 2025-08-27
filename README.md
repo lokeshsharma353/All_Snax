@@ -3,11 +3,6 @@
 ## Overview
 All Snax is now a simplified file processing application that works without authentication or database requirements.
 
-## What Changed
-- ✅ **Removed login system** - No more user registration or authentication
-- ✅ **Removed database** - No MySQL or user data storage required
-- ✅ **Simplified admin dashboard** - Shows basic file statistics
-- ✅ **All file processing features still work** - PDF, Word, Image tools available
 
 ## How to Run
 
